@@ -14,5 +14,10 @@ export function useInView(threshold = 0.15) {
       },
       { threshold },
     );
-  });
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, inView] as const;
 }
