@@ -29,7 +29,6 @@ export default function Amenities() {
                 transition: `all 0.5s ease ${i * 0.07}s`,
               }}
             >
-              {/* Icon scales up on hover */}
               <span className="text-2xl transition-transform duration-300 group-hover:scale-125">
                 {amenity.icon}
               </span>
