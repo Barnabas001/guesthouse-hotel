@@ -37,15 +37,12 @@ export default function RoomCard({ room, index, onBook }: Props) {
       <div
         className="p-6 h-full transition-colors duration-500"
         style={{
-          // In dark mode: use the room's dark gradient
-          // In light mode: use a clean white card
           background: isDark
             ? `linear-gradient(135deg, var(--tw-gradient-stops))`
             : t.cardBg,
           border: `1px solid ${isDark ? t.cardBorder : room.accent + "30"}`,
         }}
       >
-        {/* Apply dark gradient classes only in dark mode */}
         {isDark && (
           <div
             className={`absolute inset-0 bg-linear-to-br ${room.gradient} -z-10`}
@@ -126,7 +123,6 @@ export default function RoomCard({ room, index, onBook }: Props) {
           ))}
         </div>
 
-        {/* CTA */}
         <button
           onClick={() => onBook(room)}
           className="w-full py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-300"

@@ -42,7 +42,6 @@ export default function Home() {
         }}
       />
 
-      {/* Glow orbs */}
       <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none transition-all duration-500"
         style={{
@@ -77,7 +76,6 @@ export default function Home() {
 
       {/* Main content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-        {/* Eyebrow */}
         <div
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8"
           style={{
