@@ -4,8 +4,9 @@ import Navbar from "./sections/Navbar";
 import Home from "./sections/Home";
 import Amenities from "./sections/Amenities";
 import Rooms from "./sections/Rooms";
+import Booking from "./sections/Booking";
 
-document.title = "Lumière Guest House | Luxury Urban Accommodation";
+document.title = "Bold Place Hotel | Luxury Urban Accommodation";
 
 export default function App() {
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
@@ -25,6 +26,10 @@ export default function App() {
       <Home />
       <Amenities />
       <Rooms onBook={handleBook} />
+      <Booking
+        selectedRoom={selectedRoom}
+        onClear={() => setSelectedRoom(null)}
+      />
     </div>
   );
 }
