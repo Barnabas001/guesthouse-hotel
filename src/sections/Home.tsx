@@ -146,7 +146,6 @@ export default function Hero() {
           Uncompromising quality. Unforgettable stays.
         </p>
 
-        {/* CTAs */}
         <div
           className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           style={{
