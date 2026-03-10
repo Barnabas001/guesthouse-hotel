@@ -28,3 +28,10 @@ export interface BookingForm {
   room: string;
   message: string;
 }
+
+export type Theme = "dark" | "light";
+
+export interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
