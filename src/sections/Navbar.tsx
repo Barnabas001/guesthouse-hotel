@@ -23,14 +23,14 @@ export default function Navbar() {
             className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, #C9A84C, #8B6914)" }}
           >
-            <span className="text-black text-xs font-black">LG</span>
+            <span className="text-black text-xs font-black">BP</span>
           </div>
           <div>
             <span className="text-white font-black text-lg tracking-tight">
-              LUMIÈRE
+              Bold Place
             </span>
             <span className="text-white/40 text-xs block -mt-1 tracking-[0.15em]">
-              GUEST HOUSE
+              HOTEL
             </span>
           </div>
         </div>

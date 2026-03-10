@@ -72,7 +72,7 @@ export default function Hero() {
         >
           <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
           <span className="text-yellow-500/80 text-xs font-bold tracking-[0.25em]">
-            LUXURY URBAN GUEST HOUSE
+            Bold place hotel
           </span>
         </div>
 
