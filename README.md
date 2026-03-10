@@ -124,10 +124,7 @@ lumiere-guest-house/
 
 Find every instance of `234***` and replace with your number (include country code, no `+` sign):
 
-```
-src/components/WhatsAppButton.tsx  → line 7
-src/components/BookingForm.tsx     → line 67
-```
+
 
 ### 2. Google Maps Embed
 
