@@ -6,8 +6,8 @@ export default function Footer() {
   const quickLinks = ["Rooms", "Amenities", "Location", "Booking"];
 
   const contactDetails = [
-    { icon: "📧", value: "hello@lumiereguest.com" },
-    { icon: "📞", value: "+234 801 234 5678" },
+    { icon: "📧", value: "***@example.com" },
+    { icon: "📞", value: "+234 ** *** ****" },
     { icon: "🕐", value: "Check-in from 2:00 PM" },
     { icon: "🕐", value: "Check-out by 11:00 AM" },
   ];
@@ -45,14 +45,14 @@ export default function Footer() {
                   background: "linear-gradient(135deg, #C9A84C, #8B6914)",
                 }}
               >
-                <span className="text-black font-black">LG</span>
+                <span className="text-black font-black">BP</span>
               </div>
               <div>
                 <span className="text-white font-black text-xl tracking-tight">
-                  LUMIÈRE
+                  Bold Place
                 </span>
                 <span className="text-white/40 text-xs block -mt-1 tracking-[0.15em]">
-                  GUEST HOUSE
+                  Hotel
                 </span>
               </div>
             </div>
@@ -122,8 +122,7 @@ export default function Footer() {
           }}
         >
           <p className="text-white/20 text-xs">
-            © {new Date().getFullYear()} Lumière Guest House. All rights
-            reserved.
+            © {new Date().getFullYear()} Bold place hotel. All rights reserved.
           </p>
         </div>
       </div>

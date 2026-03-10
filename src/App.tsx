@@ -1,10 +1,15 @@
 import { useState } from "react";
 import type { Room } from "./types";
-import Navbar from "./sections/Navbar";
-import Home from "./sections/Home";
-import Amenities from "./sections/Amenities";
-import Rooms from "./sections/Rooms";
-import Booking from "./sections/Booking";
+import {
+  Navbar,
+  Home,
+  Amenities,
+  Rooms,
+  Booking,
+  Location,
+  Footer,
+} from "./sections";
+import { WhatsAppButton } from "./components";
 
 document.title = "Bold Place Hotel | Luxury Urban Accommodation";
 
@@ -30,6 +35,9 @@ export default function App() {
         selectedRoom={selectedRoom}
         onClear={() => setSelectedRoom(null)}
       />
+      <Location />
+      <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
