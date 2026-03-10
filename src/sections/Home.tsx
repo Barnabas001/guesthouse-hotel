@@ -3,7 +3,7 @@ import AnimatedNumber from "../components/AnimatedNumber";
 import { useTheme } from "../context";
 import { themes } from "../styles/theme";
 
-export default function Hero() {
+export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const { theme } = useTheme();
   const t = themes[theme];
@@ -93,7 +93,7 @@ export default function Hero() {
             className="text-xs font-bold tracking-[0.25em]"
             style={{ color: t.gold }}
           >
-            LUXURY URBAN GUEST HOUSE
+            Bold Place Hotel
           </span>
         </div>
 
