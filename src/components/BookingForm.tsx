@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ROOMS } from "../data/rooms";
+import { useTheme } from "../context";
+import { themes } from "../styles/theme";
 import type { BookingForm as BookingFormType, Room } from "../types";
 
 interface Props {
@@ -8,6 +10,9 @@ interface Props {
 }
 
 export default function BookingForm({ selectedRoom, onClear }: Props) {
+  const { theme } = useTheme();
+  const t = themes[theme];
+
   const [form, setForm] = useState<BookingFormType>({
     name: "",
     email: "",
@@ -44,7 +49,6 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
     if (!form.checkout) newErrors.checkout = "Check-out date is required";
     if (!form.room) newErrors.room = "Please select a room";
 
-    // Check checkout is after checkin
     if (form.checkin && form.checkout && form.checkout <= form.checkin) {
       newErrors.checkout = "Check-out must be after check-in";
     }
@@ -69,35 +73,58 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
     );
 
     // 🎓 Replace with companies real WhatsApp number
-    window.open(`https://wa.me/234801***?text=${message}`, "_blank");
+
+    window.open(`https://wa.me/234*****?text=${message}`, "_blank");
     setSubmitted(true);
   };
 
-  // ── Reusable style strings ──
-  const inputClass = `
-    w-full bg-white/5 border rounded-xl px-4 py-3 text-white
-    placeholder-white/30 text-sm focus:outline-none
-    focus:bg-white/8 transition-all duration-200
-  `;
-  const labelClass =
-    "block text-white/50 text-xs font-bold tracking-widest mb-2 uppercase";
+  // ── Shared styles ──
+  const inputStyle = {
+    backgroundColor: t.inputBg,
+    borderColor: t.inputBorder,
+    color: t.textPrimary,
+  };
+
+  const labelStyle = { color: t.textMuted };
+
+  const inputClass =
+    "w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-all duration-200";
+
+  const labelClass = "block text-xs font-bold tracking-widest mb-2 uppercase";
 
   // ── Success screen ──
   if (submitted) {
     return (
       <div
-        className="text-center py-20 border border-white/10 rounded-3xl"
-        style={{ background: "rgba(201,168,76,0.05)" }}
+        className="text-center py-20 border rounded-3xl transition-colors duration-500"
+        style={{
+          backgroundColor: t.goldSubtle,
+          borderColor: t.goldBorder,
+        }}
       >
         <div className="text-6xl mb-4">✅</div>
-        <h3 className="text-white font-black text-2xl mb-2">Request Sent!</h3>
-        <p className="text-white/50 max-w-sm mx-auto">
+        <h3
+          className="font-black text-2xl mb-2 transition-colors duration-500"
+          style={{ color: t.textPrimary }}
+        >
+          Request Sent!
+        </h3>
+        <p
+          className="max-w-sm mx-auto transition-colors duration-500"
+          style={{ color: t.textSecondary }}
+        >
           Check your WhatsApp — we've received your reservation request and will
           confirm within 2 hours.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-6 px-6 py-2 rounded-full border border-white/20 text-white/60 text-sm hover:text-white transition-colors"
+          className="mt-6 px-6 py-2 rounded-full text-sm transition-all duration-200"
+          style={{
+            border: `1px solid ${t.borderMid}`,
+            color: t.textSecondary,
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = t.textPrimary)}
+          onMouseLeave={(e) => (e.currentTarget.style.color = t.textSecondary)}
         >
           Submit another request
         </button>
@@ -107,32 +134,46 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
   return (
     <div
-      className="rounded-3xl border border-white/10 overflow-hidden"
+      className="rounded-3xl border overflow-hidden transition-colors duration-500"
       style={{
-        background:
-          "linear-gradient(135deg, rgba(201,168,76,0.05), rgba(255,255,255,0.02))",
-        boxShadow: "0 40px 80px rgba(0,0,0,0.5)",
+        background: `linear-gradient(135deg, ${t.goldSubtle}, ${t.cardBg})`,
+        borderColor: t.borderMid,
+        boxShadow:
+          theme === "dark"
+            ? "0 40px 80px rgba(0,0,0,0.5)"
+            : "0 20px 60px rgba(0,0,0,0.08)",
       }}
     >
       <div className="p-8 md:p-10">
         {/* ── Selected room banner ── */}
-
         {selectedRoom && (
           <div
-            className="flex items-center gap-3 mb-8 p-4 rounded-xl border border-yellow-600/20"
-            style={{ backgroundColor: "rgba(201,168,76,0.08)" }}
+            className="flex items-center gap-3 mb-8 p-4 rounded-xl border transition-colors duration-500"
+            style={{
+              backgroundColor: t.goldSubtle,
+              borderColor: t.goldBorder,
+            }}
           >
             <span className="text-2xl">{selectedRoom.emoji}</span>
             <div>
-              <p className="text-white font-bold">{selectedRoom.name}</p>
-              <p className="text-yellow-600/70 text-sm">
+              <p
+                className="font-bold transition-colors duration-500"
+                style={{ color: t.textPrimary }}
+              >
+                {selectedRoom.name}
+              </p>
+              <p className="text-sm" style={{ color: t.gold }}>
                 ${selectedRoom.price}/night · {selectedRoom.size}
               </p>
             </div>
-            {/* Clear the selected room */}
             <button
               onClick={onClear}
-              className="ml-auto text-white/30 hover:text-white text-lg transition-colors"
+              className="ml-auto text-lg transition-colors duration-200"
+              style={{ color: t.textMuted }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = t.textPrimary)
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.color = t.textMuted)}
               aria-label="Clear selected room"
             >
               ✕
@@ -144,15 +185,19 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Name */}
           <div>
-            <label className={labelClass}>Full Name *</label>
+            <label className={labelClass} style={labelStyle}>
+              Full Name *
+            </label>
             <input
               name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className={`${inputClass} ${
-                errors.name ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.name ? "#ef4444" : t.inputBorder,
+              }}
             />
             {errors.name && (
               <p className="text-red-400 text-xs mt-1">{errors.name}</p>
@@ -161,16 +206,20 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Email */}
           <div>
-            <label className={labelClass}>Email *</label>
+            <label className={labelClass} style={labelStyle}>
+              Email *
+            </label>
             <input
               name="email"
               type="email"
               value={form.email}
               onChange={handleChange}
               placeholder="john@example.com"
-              className={`${inputClass} ${
-                errors.email ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.email ? "#ef4444" : t.inputBorder,
+              }}
             />
             {errors.email && (
               <p className="text-red-400 text-xs mt-1">{errors.email}</p>
@@ -179,15 +228,19 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Phone */}
           <div>
-            <label className={labelClass}>Phone / WhatsApp *</label>
+            <label className={labelClass} style={labelStyle}>
+              Phone / WhatsApp *
+            </label>
             <input
               name="phone"
               value={form.phone}
               onChange={handleChange}
               placeholder="+234 800 000 0000"
-              className={`${inputClass} ${
-                errors.phone ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.phone ? "#ef4444" : t.inputBorder,
+              }}
             />
             {errors.phone && (
               <p className="text-red-400 text-xs mt-1">{errors.phone}</p>
@@ -196,23 +249,30 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Room select */}
           <div>
-            <label className={labelClass}>Room *</label>
+            <label className={labelClass} style={labelStyle}>
+              Room *
+            </label>
             <select
               name="room"
               value={form.room}
               onChange={handleChange}
-              className={`${inputClass} ${
-                errors.room ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.room ? "#ef4444" : t.inputBorder,
+              }}
             >
-              <option value="" style={{ background: "#111" }}>
+              <option
+                value=""
+                style={{ background: theme === "dark" ? "#111" : "#fff" }}
+              >
                 Select a room...
               </option>
               {ROOMS.map((r) => (
                 <option
                   key={r.id}
                   value={r.name}
-                  style={{ background: "#111" }}
+                  style={{ background: theme === "dark" ? "#111" : "#fff" }}
                 >
                   {r.name} — ${r.price}/night
                 </option>
@@ -225,17 +285,20 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Check-in */}
           <div>
-            <label className={labelClass}>Check-in Date *</label>
+            <label className={labelClass} style={labelStyle}>
+              Check-in Date *
+            </label>
             <input
               name="checkin"
               type="date"
               value={form.checkin}
               onChange={handleChange}
-              // 🎓 min prevents selecting dates in the past
               min={new Date().toISOString().split("T")[0]}
-              className={`${inputClass} ${
-                errors.checkin ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.checkin ? "#ef4444" : t.inputBorder,
+              }}
             />
             {errors.checkin && (
               <p className="text-red-400 text-xs mt-1">{errors.checkin}</p>
@@ -244,16 +307,20 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Check-out */}
           <div>
-            <label className={labelClass}>Check-out Date *</label>
+            <label className={labelClass} style={labelStyle}>
+              Check-out Date *
+            </label>
             <input
               name="checkout"
               type="date"
               value={form.checkout}
               onChange={handleChange}
               min={form.checkin || new Date().toISOString().split("T")[0]}
-              className={`${inputClass} ${
-                errors.checkout ? "border-red-500/60" : "border-white/10"
-              }`}
+              className={inputClass}
+              style={{
+                ...inputStyle,
+                borderColor: errors.checkout ? "#ef4444" : t.inputBorder,
+              }}
             />
             {errors.checkout && (
               <p className="text-red-400 text-xs mt-1">{errors.checkout}</p>
@@ -262,15 +329,22 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Guests */}
           <div>
-            <label className={labelClass}>Number of Guests</label>
+            <label className={labelClass} style={labelStyle}>
+              Number of Guests
+            </label>
             <select
               name="guests"
               value={form.guests}
               onChange={handleChange}
-              className={`${inputClass} border-white/10`}
+              className={inputClass}
+              style={inputStyle}
             >
               {[1, 2, 3, 4].map((n) => (
-                <option key={n} value={n} style={{ background: "#111" }}>
+                <option
+                  key={n}
+                  value={n}
+                  style={{ background: theme === "dark" ? "#111" : "#fff" }}
+                >
                   {n} guest{n > 1 ? "s" : ""}
                 </option>
               ))}
@@ -279,13 +353,16 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
 
           {/* Special requests */}
           <div>
-            <label className={labelClass}>Special Requests</label>
+            <label className={labelClass} style={labelStyle}>
+              Special Requests
+            </label>
             <input
               name="message"
               value={form.message}
               onChange={handleChange}
               placeholder="Early check-in, dietary needs..."
-              className={`${inputClass} border-white/10`}
+              className={inputClass}
+              style={inputStyle}
             />
           </div>
         </div>
@@ -296,13 +373,16 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
           className="mt-8 w-full py-4 rounded-xl font-black text-black text-base tracking-wide transition-all duration-300 hover:scale-[1.02]"
           style={{
             background: "linear-gradient(135deg, #C9A84C, #FFE08C)",
-            boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
+            boxShadow: `0 8px 32px ${t.goldGlow}`,
           }}
         >
           Send Reservation Request via WhatsApp →
         </button>
 
-        <p className="text-center text-white/20 text-xs mt-4">
+        <p
+          className="text-center text-xs mt-4 transition-colors duration-500"
+          style={{ color: t.textFaint }}
+        >
           No payment required now. We'll confirm availability within 2 hours.
         </p>
       </div>
