@@ -8,10 +8,6 @@ interface Props {
 }
 
 export default function BookingForm({ selectedRoom, onClear }: Props) {
-  // 🎓 One useState holds ALL form fields as a single object.
-  // This is cleaner than having a separate useState for each field.
-  // We use the BookingForm type we defined in types/index.ts
-  // so TypeScript knows exactly what shape this object must be.
   const [form, setForm] = useState<BookingFormType>({
     name: "",
     email: "",
@@ -26,9 +22,6 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
   const [errors, setErrors] = useState<Partial<BookingFormType>>({});
   const [submitted, setSubmitted] = useState(false);
 
-  // 🎓 One handler for ALL inputs — we use the input's `name`
-  // attribute to know which field to update. This way we don't
-  // need a separate onChange for every single input.
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -36,7 +29,6 @@ export default function BookingForm({ selectedRoom, onClear }: Props) {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Clear the error for this field as soon as the user starts typing
     if (errors[name as keyof BookingFormType]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
